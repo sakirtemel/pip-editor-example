@@ -7,10 +7,14 @@
     <style type="text/css" media="screen">
         #editor { 
             position: absolute;
-            top: 30px;
+            top: 0;
             right: 0;
             bottom: 0;
             left: 0;
+        }
+
+        .editorNotInPiP {
+            top: 30px !important;
         }
     </style>    
   </head>
@@ -19,7 +23,7 @@
         <div>
             <a href="#" id="pipButton">Open in PiP</a>
         </div>
-        <div id="editor">// Test content</div>    
+        <div id="editor" class="editorNotInPiP">// Test content</div>    
     </div>
     <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.15.3/src-min-noconflict/ace.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/ace-builds@1.15.3/css/ace.min.css" rel="stylesheet">    
@@ -32,7 +36,9 @@
             const editor = document.querySelector("#editor");
 
             // Open a Picture-in-Picture window.
-            const pipWindow = await documentPictureInPicture.requestWindow({ width: editor.clientWidth, height: editor.clientHeight, copyStyleSheets: true });
+            const pipWindow = await documentPictureInPicture.requestWindow({ width: window.screen.width / 3, height: window.screen.height * 0.8, copyStyleSheets: true });
+
+            editor.classList.remove('editorNotInPiP')
 
             // Move the player to the Picture-in-Picture window.
             pipWindow.document.body.append(editor);
